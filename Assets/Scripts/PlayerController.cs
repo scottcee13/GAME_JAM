@@ -12,11 +12,11 @@ public class PlayerController : MonoBehaviour
     public float AirAcceleration = 5f;
     public float AirDeceleration = 20f;
 
-    [Header("Grounded/Collision Checks")]
+    [Header("Jumping")]
     public LayerMask GroundLayer;
     public float GroundDetectionRayLength = 0.02f;
-    public float HeadDetectionRayLength = 0.02f;
-    public float HeadWidth = 0.75f;
+    public float JumpForce = 10f;
+    public float JumpCooldown = 0.2f;
     [SerializeField] private bool _showDebugGroundedBox = false;
 
     [Header("References")]
@@ -27,9 +27,10 @@ public class PlayerController : MonoBehaviour
     private bool _isFacingRight;
 
     private RaycastHit2D _groundHit;
-    private RaycastHit2D _headHit;
     private bool _isGrounded;
-    private bool _bumpedHead;
+
+    private bool _isJumping = false;
+    private float _jumpCooldownTimer = 0f;
 
     private PlayerInputManager _playerInputManager;
     private Rigidbody2D _rb;
@@ -40,6 +41,16 @@ public class PlayerController : MonoBehaviour
 
         _playerInputManager = GetComponent<PlayerInputManager>();
         _rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        if (_playerInputManager.JumpPressed && _isGrounded && _jumpCooldownTimer <= 0)
+        {
+            Jump(1);
+        }
+
+        _jumpCooldownTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -66,13 +77,15 @@ public class PlayerController : MonoBehaviour
             Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * MaxWalkSpeed;
 
             _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-            _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+            //_rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+            _rb.linearVelocityX = _moveVelocity.x;
         }
 
         else if (moveInput == Vector2.zero)
         {
             _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
-            _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+            //_rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+            _rb.linearVelocityX = _moveVelocity.x;
         }
     }
 
@@ -101,6 +114,17 @@ public class PlayerController : MonoBehaviour
             _isFacingRight = false;
             transform.Rotate(0f, -180f, 0f);
         }
+    }
+
+    #endregion
+
+    #region Jump
+
+    public void Jump(float multiplier)
+    {
+        _jumpCooldownTimer = JumpCooldown;
+
+        _rb.AddForceY(JumpForce * multiplier, ForceMode2D.Impulse);
     }
 
     #endregion
@@ -142,8 +166,6 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y - GroundDetectionRayLength), Vector2.right * boxCastSize.x, rayColor);
         }
         #endregion
-
-
     }
 
     #endregion

@@ -7,9 +7,7 @@ public class PlayerInputManager : MonoBehaviour
     private PlayerInput _playerInput;
 
     public Vector2 MovementDirection;
-    public bool JumpWasPressed;
-    public bool JumpIsHeld;
-    public bool JumpWasReleased;
+    public bool JumpPressed;
 
     private void Awake()
     {
@@ -18,12 +16,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started)
-            JumpWasPressed = true;
-        else if (context.performed)
-            JumpIsHeld = true;
-        else if (context.canceled)
-            JumpWasReleased = true;
+        JumpPressed = context.performed;
     }
 
     public void OnMove(InputAction.CallbackContext context)
