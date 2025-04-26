@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
-public class PlayerInputManager : MonoBehaviour
+public class PlayerInputManagerOld : MonoBehaviour
 {
     private PlayerInput _playerInput;
 
@@ -19,11 +19,15 @@ public class PlayerInputManager : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
+        {
             JumpWasPressed = true;
-        else if (context.performed)
-            JumpIsHeld = true;
+            //JumpWasReleased = false;
+        }
         else if (context.canceled)
+        {
+            //JumpWasPressed = false;
             JumpWasReleased = true;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
