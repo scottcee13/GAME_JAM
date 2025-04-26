@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     public float JumpCooldown = 0.2f;
     [SerializeField] private bool _showDebugGroundedBox = false;
 
+    [Header("Time Shift")]
+    public float TimeShiftCooldown = 0.2f;
+
     [Header("References")]
     [SerializeField] private Collider2D _feetCollider;
     [SerializeField] private Collider2D _bodyCollider;
@@ -31,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private bool _isJumping = false;
     private float _jumpCooldownTimer = 0f;
+    private float _timeShiftCooldownTimer = 0f;
 
     private PlayerInputManager _playerInputManager;
     private Rigidbody2D _rb;
@@ -43,6 +47,11 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        _playerInputManager.TimeShiftEvent.AddListener(TimeShift);
+    }
+
     private void Update()
     {
         if (_playerInputManager.JumpPressed && _isGrounded && _jumpCooldownTimer <= 0)
@@ -51,6 +60,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _jumpCooldownTimer -= Time.deltaTime;
+        _timeShiftCooldownTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -129,6 +139,15 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    public void TimeShift()
+    {
+        if (_timeShiftCooldownTimer > TimeShiftCooldown)
+            return;
+
+        _timeShiftCooldownTimer = TimeShiftCooldown;
+        LevelBase.Instance.OnTimeShift();
+    }
+
     #region Collision Checks
 
     private void CollisionChecks()
@@ -169,4 +188,9 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
 }

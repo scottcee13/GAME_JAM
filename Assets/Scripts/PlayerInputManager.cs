@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputManager : MonoBehaviour
 {
-    private PlayerInput _playerInput;
-
     public Vector2 MovementDirection;
     public bool JumpPressed;
 
-    private void Awake()
+    public UnityEvent TimeShiftEvent = new();
+
+    private void Start()
     {
-        _playerInput = GetComponent<PlayerInput>();
+        //TimeShiftEvent.AddListener(LevelBase.Instance.OnTimeShift);
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -22,5 +23,10 @@ public class PlayerInputManager : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         MovementDirection = context.ReadValue<Vector2>();
+    }
+
+    public void OnTimeShift(InputAction.CallbackContext context)
+    {
+        if (context.started) TimeShiftEvent.Invoke();
     }
 }
