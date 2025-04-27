@@ -14751,6 +14751,8 @@ MonoBehaviour:
   _allottedTime: 300
   _pastWorld: {fileID: 1911072011}
   _presentWorld: {fileID: 1617038907}
+  _levelCinemachineCam: {fileID: 1406255353}
+  _timeShiftZoom: 0.9
   _inThePast: 1
   flashDuration: 0.25
   flashImage: {fileID: 1894025688}

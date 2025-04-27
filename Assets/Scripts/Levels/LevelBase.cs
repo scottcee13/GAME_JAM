@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -21,6 +22,8 @@ public class LevelBase : MonoBehaviour
     [Header("Timeshifting")]
     [SerializeField] private GameObject _pastWorld;
     [SerializeField] private GameObject _presentWorld;
+    [SerializeField] private CinemachineCamera _levelCinemachineCam;
+    [SerializeField] private float _timeShiftZoom = 0.9f;
     [SerializeField] private bool _inThePast = false; // when do we start?
     [SerializeField] private float flashDuration = 0.25f;
     [SerializeField] private Image flashImage;
@@ -77,12 +80,14 @@ public class LevelBase : MonoBehaviour
         float r = (toThePast) ? pastColor.r : presentColor.r;
         float g = (toThePast) ? pastColor.g : presentColor.g;
         float b = (toThePast) ? pastColor.b : presentColor.b;
+        float baseCamSize = _levelCinemachineCam.Lens.OrthographicSize;
 
-        while (t < flashDuration / 2f)
+        while (t < flashDuration / 4f)
         {
             t += Time.deltaTime;
-            float alpha = Mathf.Lerp(0f, 0.75f, t / (flashDuration / 2f));
+            float alpha = Mathf.Lerp(0f, 0.75f, t / (flashDuration / 4f));
             flashImage.color = new Color(r, g, b, alpha);
+            _levelCinemachineCam.Lens.OrthographicSize = Mathf.Lerp(baseCamSize, baseCamSize * _timeShiftZoom, t / (flashDuration / 4f));
             yield return null;
         }
 
@@ -91,11 +96,12 @@ public class LevelBase : MonoBehaviour
         //presentEnvironment.SetActive(!isInPast);
 
         t = 0f;
-        while (t < flashDuration / 2f)
+        while (t < (flashDuration * 3 / 4f))
         {
             t += Time.deltaTime;
-            float alpha = Mathf.Lerp(0.75f, 0f, t / (flashDuration / 2f));
+            float alpha = Mathf.Lerp(0.75f, 0f, t / (flashDuration * 3 / 4f));
             flashImage.color = new Color(r, g, b, alpha);
+            _levelCinemachineCam.Lens.OrthographicSize = Mathf.Lerp(baseCamSize * _timeShiftZoom, baseCamSize, t / (flashDuration * 3 / 4f));
             yield return null;
         }
     }
