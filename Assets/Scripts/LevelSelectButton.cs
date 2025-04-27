@@ -24,7 +24,7 @@ public class LevelSelectButton : MonoBehaviour
 
     private void Start()
     {
-        highScore = TGData.GetLevelData(levelPath, levelFile).highScore;
+        highScore = FFGJData.GetLevelData(levelPath, levelFile).highScore;
     }
 
     void ButtonPressed()

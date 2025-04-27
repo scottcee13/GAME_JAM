@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class TGData
+public class FFGJData
 {
     public static void SaveLevelData(float highScore, string path, string fileName)
     {
@@ -45,7 +45,8 @@ public class TGData
 
     public static string ConvertToTimeFormat(float timer)
     {
-        return Mathf.FloorToInt(timer / 60).ToString() + ":" + Mathf.FloorToInt(timer % 60).ToString("D2") + "." + Mathf.FloorToInt((timer * 1000) % 1000).ToString("000");
+        timer += 1; // compensate for converted time only counting whole numbers
+        return Mathf.FloorToInt(timer / 60).ToString() + ":" + Mathf.FloorToInt(timer % 60).ToString("D2");
     }
 }
 

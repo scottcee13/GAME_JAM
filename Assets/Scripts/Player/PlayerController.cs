@@ -1,6 +1,5 @@
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -17,7 +16,11 @@ public class PlayerController : MonoBehaviour
     public float GroundDetectionRayLength = 0.02f;
     public float JumpForce = 10f;
     public float JumpCooldown = 0.2f;
+    public float GravityScale = 2f;
     [SerializeField] private bool _showDebugGroundedBox = false;
+
+    [Header("Climbing")]
+    public float ClimbSpeed = 3f;
 
     [Header("Time Shift")]
     public float TimeShiftCooldown = 0.2f;
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Collider2D _feetCollider;
     [SerializeField] private Collider2D _bodyCollider;
+    [SerializeField] private PlayerClimbArea _climbArea;
 
     private Vector2 _moveVelocity;
     private bool _isFacingRight;
@@ -32,9 +36,11 @@ public class PlayerController : MonoBehaviour
     private RaycastHit2D _groundHit;
     private bool _isGrounded;
 
-    private bool _isJumping = false;
+    //private bool _isJumping = false;
     private float _jumpCooldownTimer = 0f;
     private float _timeShiftCooldownTimer = 0f;
+
+    private bool _isClimbing = false;
 
     private PlayerInputManager _playerInputManager;
     private Rigidbody2D _rb;
@@ -45,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
         _playerInputManager = GetComponent<PlayerInputManager>();
         _rb = GetComponent<Rigidbody2D>();
+        _rb.gravityScale = GravityScale;
     }
 
     private void Start()
@@ -54,9 +61,22 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log($"{_playerInputManager.JumpPressed} {_isGrounded} {_jumpCooldownTimer}");
+
         if (_playerInputManager.JumpPressed && _isGrounded && _jumpCooldownTimer <= 0)
         {
             Jump(1);
+            StopClimb(); //can't jump and climb at same time
+        }
+
+        if (_climbArea.CanClimb && !_isClimbing && !Mathf.Approximately(_playerInputManager.MovementDirection.y, 0f))
+        {
+            StartClimb();
+        }
+
+        if (_isClimbing)
+        {
+            ClimbCheck();
         }
 
         _jumpCooldownTimer -= Time.deltaTime;
@@ -67,13 +87,20 @@ public class PlayerController : MonoBehaviour
     {
         CollisionChecks();
 
-        if (_isGrounded)
+        if (!_isClimbing)
         {
-            Move(GroundAcceleration, GroundDeceleration, _playerInputManager.MovementDirection);
+            if (_isGrounded)
+            {
+                Move(GroundAcceleration, GroundDeceleration, _playerInputManager.MovementDirection);
+            }
+            else
+            {
+                Move(AirAcceleration, AirDeceleration, _playerInputManager.MovementDirection);
+            }
         }
         else
         {
-            Move(AirAcceleration, AirDeceleration, _playerInputManager.MovementDirection);
+            Climb();
         }
     }
 
@@ -97,6 +124,58 @@ public class PlayerController : MonoBehaviour
             //_rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
             _rb.linearVelocityX = _moveVelocity.x;
         }
+    }
+
+    private void Climb()
+    {
+        _rb.linearVelocityY = _playerInputManager.MovementDirection.y * ClimbSpeed;
+    }
+
+    private void ClimbCheck()
+    {
+        // just can't climb
+        if (!_climbArea.CanClimb)
+        {
+            StopClimb();
+            Debug.Log("can't climb");
+            // little hop if climbing upward and exceed ladder
+            if (_playerInputManager.MovementDirection.y > 0f)
+                Jump(0.5f);
+            return;
+        }
+
+        // Climb towards ground, stop climbing
+        if (_isGrounded && _playerInputManager.MovementDirection.y < 0f)
+        {
+            StopClimb();
+            Debug.Log("going toward the ground");
+            return;
+        }
+
+        // Cancel if we decide to move sideways
+        if (!Mathf.Approximately(_playerInputManager.MovementDirection.x, 0f))
+        {
+            StopClimb();
+            Debug.Log("movin sideways");
+            return;
+        }
+    }
+
+    private void StartClimb()
+    {
+        _isClimbing = true;
+        _rb.gravityScale = 0f;
+        _rb.linearVelocity = Vector2.zero; // reset all movement
+        _feetCollider.enabled = false; 
+        _bodyCollider.enabled = false; // disable colliders so we can phase thru platforms from below
+    }
+
+    private void StopClimb()
+    {
+        _isClimbing = false;
+        _rb.gravityScale = GravityScale;
+        _feetCollider.enabled = true;
+        _bodyCollider.enabled = true;
     }
 
     private void FlipCheck(Vector2 moveInput)
@@ -189,8 +268,5 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
+    
 }

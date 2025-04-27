@@ -80,7 +80,7 @@ public class SceneLoadManager : MonoBehaviour
 
         UIManager.Instance.showTimer();
         if (nextState != GameManager.GameState.MAIN_MENU)
-            UIManager.Instance.resetTimer();
+            UIManager.Instance.ResetTimer(LevelBase.Instance.AllottedTime);
 
 
         GameManager.Instance.gameState = nextState;
@@ -116,7 +116,7 @@ public class SceneLoadManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
         
-        UIManager.Instance.resetTimer();
+        UIManager.Instance.ResetTimer(LevelBase.Instance.AllottedTime);
         if (nextState != GameManager.GameState.MAIN_MENU)
             UIManager.Instance.showTimer();
 

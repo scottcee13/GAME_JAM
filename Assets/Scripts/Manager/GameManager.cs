@@ -16,8 +16,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent death;
     public UnityEvent pause;
 
-    [SerializeField]
-    private InputAction pauseAction;
+    [SerializeField] private InputAction pauseAction;
 
     private bool gameFrozen = false;
 

@@ -45,12 +45,12 @@ public class MenuScript : MonoBehaviour
     {
         levelPreview.sprite = levelImage;
         levelToLoad = levelName;
-        bestTime.text = (highScore < float.MaxValue) ? "Best Time: " + TGData.ConvertToTimeFormat(highScore) : "Level Not Beaten";
+        bestTime.text = (highScore < float.MaxValue) ? "Best Time: " + FFGJData.ConvertToTimeFormat(highScore) : "Level Not Beaten";
     }
 
     public void ResetData()
     {
-        TGData.DeleteAllLevelData();
+        FFGJData.DeleteAllLevelData();
     }
 
     public void LoadLevel()

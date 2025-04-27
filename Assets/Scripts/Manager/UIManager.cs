@@ -20,16 +20,17 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI bestClearTime;
     [SerializeField]
     private TextMeshProUGUI timerText;
-    [SerializeField]
-    public float timer;
-    [SerializeField]
-    public float highScore = float.MaxValue;
+    public float _timer;
+    public float HighScore = float.MinValue;
 
     public GameObject pauseMenu;
     public GameObject gameOverMenu;  
     public GameObject gameWinMenu;
     public GameObject timerObject;
     public GameObject newBestObject;
+
+    public float Timer => _timer;
+
 
     private void Awake()
     {
@@ -52,11 +53,11 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        _timer -= Time.deltaTime;
 
-        //only run in scenes with timer object
+        //only run in scenes with Timer object
         if (timerObject)
-            timerText.text = TGData.ConvertToTimeFormat(timer);
+            timerText.text = FFGJData.ConvertToTimeFormat(_timer);
     }
 
     public void Resume()
@@ -89,9 +90,9 @@ public class UIManager : MonoBehaviour
         timerObject.SetActive(true);
     }
 
-    public void resetTimer()
+    public void ResetTimer(float timer)
     {
-        timer = 0f;
+        _timer = timer;
     }
 
     public void HideUI()
@@ -103,29 +104,17 @@ public class UIManager : MonoBehaviour
         newBestObject.SetActive(false);
     }
 
-    public void CompleteLevel()
-    {       
-        gameWinMenu.SetActive(true);
-        if (timer < highScore)
-        {           
-            highScore = timer;
-            newBestObject.SetActive(true);
-        }
-        gameClearTime.text = TGData.ConvertToTimeFormat(timer);
-        bestClearTime.text = TGData.ConvertToTimeFormat(highScore);
-    }
-
-    public void CompleteGame(string path, string fileName, bool endOfArea)
+    public void CompleteLevel(string path, string fileName, bool endOfArea)
     {
         gameWinMenu.SetActive(true);
-        if (timer < highScore)
+        if (_timer < HighScore)
         {
-            highScore = timer;
-            TGData.SaveLevelData(highScore, path, fileName);
+            HighScore = _timer;
+            FFGJData.SaveLevelData(HighScore, path, fileName);
             newBestObject.SetActive(true);
         }
-        gameClearTime.text = TGData.ConvertToTimeFormat(timer);
-        bestClearTime.text = TGData.ConvertToTimeFormat(highScore);
+        gameClearTime.text = FFGJData.ConvertToTimeFormat(_timer);
+        bestClearTime.text = FFGJData.ConvertToTimeFormat(HighScore);
     }
 }
 

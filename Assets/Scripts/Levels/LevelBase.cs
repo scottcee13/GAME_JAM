@@ -6,10 +6,22 @@ public class LevelBase : MonoBehaviour
 {
     public static LevelBase Instance { get; private set; }
 
+    [SerializeField] private string path, fileName;
+    [SerializeField] private bool endOfArea = false;
+
+    [Space]
+
+    [Tooltip("How many seconds to beat the level")]
+    [SerializeField] private float _allottedTime = 300f;
+
+    [Space]
+
     [SerializeField] private GameObject _pastWorld;
     [SerializeField] private GameObject _presentWorld;
 
     private bool _inThePast = false;
+
+    public float AllottedTime => _allottedTime;
 
     private void Awake()
     {
@@ -24,6 +36,11 @@ public class LevelBase : MonoBehaviour
         _presentWorld.SetActive(false);
     }
 
+    private void Start()
+    {
+        UIManager.Instance.HighScore = FFGJData.GetLevelData(path, fileName).highScore;
+    }
+
     public void OnTimeShift()
     {
         _inThePast = !_inThePast;
@@ -36,6 +53,6 @@ public class LevelBase : MonoBehaviour
         GameManager.Instance.gameState = GameManager.GameState.GAME_WIN;
         UIManager.Instance.hideTimer();
         GameManager.Instance.GameFrozen = true;
-        UIManager.Instance.CompleteLevel();
+        UIManager.Instance.CompleteLevel(path, fileName, endOfArea);
     }
 }
