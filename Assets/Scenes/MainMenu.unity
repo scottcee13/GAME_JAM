@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelPath: /Levels
   levelFile: temple.dat
-  levelName: PlayerTest
+  levelName: Temple
   bestTime: {fileID: 13832088}
   resetData: {fileID: 2109042321}
   startGame: {fileID: 1624937378}

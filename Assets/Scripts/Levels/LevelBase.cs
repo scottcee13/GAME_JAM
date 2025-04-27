@@ -18,8 +18,8 @@ public class LevelBase : MonoBehaviour
 
     [SerializeField] private GameObject _pastWorld;
     [SerializeField] private GameObject _presentWorld;
+    [SerializeField] private bool _inThePast = false; // when do we start?
 
-    private bool _inThePast = false;
 
     public float AllottedTime => _allottedTime;
 
@@ -39,6 +39,10 @@ public class LevelBase : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.HighScore = FFGJData.GetLevelData(path, fileName).highScore;
+
+        //set starting time based on yes
+        _pastWorld.SetActive(_inThePast);
+        _presentWorld.SetActive(!_inThePast);
     }
 
     public void OnTimeShift()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8842368110375967626}
   m_Layer: 8
   m_Name: ClimbArea
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 4426550142242656991}
   m_Layer: 0
   m_Name: Feet
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 153478283408113026}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -266,7 +266,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 5905681027756182028, guid: 14646f02bb794ee49b5d49fb7710d76e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -326,11 +326,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   GroundDetectionRayLength: 0.02
-  JumpForce: 7
+  JumpForce: 10
   JumpCooldown: 0.2
   GravityScale: 2
   _showDebugGroundedBox: 1
-  ClimbSpeed: 1.5
+  ClimbSpeed: 4
   TimeShiftCooldown: 0.2
   VelocityAnimationThreshold: 0.3
   _feetCollider: {fileID: 1642244079169108574}
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 2535054716112062890}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

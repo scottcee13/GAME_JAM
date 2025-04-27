@@ -6,6 +6,10 @@ public class DeathFloorScript : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        GameManager.Instance.death.Invoke();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GameManager.Instance.death.Invoke();
+        }
+        
     }
 }
