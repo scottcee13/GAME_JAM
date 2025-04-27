@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class LevelBase : MonoBehaviour
 {
@@ -17,17 +18,18 @@ public class LevelBase : MonoBehaviour
 
     [Space]
 
+    [Header("Timeshifting")]
     [SerializeField] private GameObject _pastWorld;
     [SerializeField] private GameObject _presentWorld;
     [SerializeField] private bool _inThePast = false; // when do we start?
+    [SerializeField] private float flashDuration = 0.25f;
+    [SerializeField] private Image flashImage;
+    [SerializeField] private Color presentColor;
+    [SerializeField] private Color pastColor;
 
-    [Space]
-
-    [Tooltip("For player stuck checks")]
-    [SerializeField] private List<CompositeCollider2D> _mapColliders;
+    private Coroutine _timeShiftCoroutine;
 
     public float AllottedTime => _allottedTime;
-    public List<CompositeCollider2D> MapColliders => _mapColliders;
 
     private void Awake()
     {
@@ -56,6 +58,9 @@ public class LevelBase : MonoBehaviour
         _inThePast = !_inThePast;
         _pastWorld.SetActive(_inThePast);
         _presentWorld.SetActive(!_inThePast);
+        if (_timeShiftCoroutine != null)
+            StopCoroutine(_timeShiftCoroutine);
+        _timeShiftCoroutine = StartCoroutine(TimeShiftFlash(_inThePast));
     }
 
     public void CompleteLevel()
@@ -64,5 +69,34 @@ public class LevelBase : MonoBehaviour
         UIManager.Instance.hideTimer();
         GameManager.Instance.GameFrozen = true;
         UIManager.Instance.CompleteLevel(path, fileName, endOfArea);
+    }
+
+    private IEnumerator TimeShiftFlash(bool toThePast)
+    {
+        float t = 0f;
+        float r = (toThePast) ? pastColor.r : presentColor.r;
+        float g = (toThePast) ? pastColor.g : presentColor.g;
+        float b = (toThePast) ? pastColor.b : presentColor.b;
+
+        while (t < flashDuration / 2f)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 0.75f, t / (flashDuration / 2f));
+            flashImage.color = new Color(r, g, b, alpha);
+            yield return null;
+        }
+
+        //isInPast = !isInPast;
+        //pastEnvironment.SetActive(isInPast);
+        //presentEnvironment.SetActive(!isInPast);
+
+        t = 0f;
+        while (t < flashDuration / 2f)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(0.75f, 0f, t / (flashDuration / 2f));
+            flashImage.color = new Color(r, g, b, alpha);
+            yield return null;
+        }
     }
 }
