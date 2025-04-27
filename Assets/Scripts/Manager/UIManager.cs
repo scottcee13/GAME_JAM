@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour
     public void CompleteLevel(string path, string fileName, bool endOfArea)
     {
         gameWinMenu.SetActive(true);
-        if (_timer < HighScore)
+        if (_timer > HighScore)
         {
             HighScore = _timer;
             FFGJData.SaveLevelData(HighScore, path, fileName);

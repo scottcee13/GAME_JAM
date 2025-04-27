@@ -6,56 +6,46 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject mainMenuScreen;
-    [SerializeField] 
-    private GameObject levelSelectScreen;
+    [SerializeField] private string levelPath, levelFile, levelName;
 
     [SerializeField]
     private TextMeshProUGUI bestTime;
     [SerializeField]
-    private Image levelPreview;
-
+    private Button resetData;
     [SerializeField]
     private Button startGame;
     [SerializeField]
     private Button quitGame;
 
-    private string levelToLoad;
+    private float _highScore;
 
     void Start()
     {
-        startGame.onClick.AddListener(OpenLevelSelect);
+        startGame.onClick.AddListener(LoadLevel);
         quitGame.onClick.AddListener(GameManager.QuitGame);
-    }
-
-    public void OpenLevelSelect()
-    {
-        levelSelectScreen.SetActive(true);
-        mainMenuScreen.SetActive(false);
-    }
-
-    public void ReturnToMainMenu()
-    {
-        mainMenuScreen.SetActive(true);
-        levelSelectScreen.SetActive(false);
-    }
-
-    public void SelectLevel(Sprite levelImage, string levelName, float highScore)
-    {
-        levelPreview.sprite = levelImage;
-        levelToLoad = levelName;
-        bestTime.text = (highScore < float.MaxValue) ? "Best Time: " + FFGJData.ConvertToTimeFormat(highScore) : "Level Not Beaten";
+        HandleScoreUI();
     }
 
     public void ResetData()
     {
         FFGJData.DeleteAllLevelData();
+        HandleScoreUI();
+    }
+
+    public void HandleScoreUI()
+    {
+        _highScore = FFGJData.GetLevelData(levelPath, levelFile).highScore;
+        resetData.onClick.RemoveAllListeners();
+        if (_highScore > float.MinValue)
+            resetData.onClick.AddListener(ResetData);
+        else
+            resetData.gameObject.SetActive(false);
+        bestTime.text = (_highScore > float.MinValue) ? "Personal Best\n" + FFGJData.ConvertToTimeFormat(_highScore) : "";
     }
 
     public void LoadLevel()
     {
-        if (levelToLoad != null)
-            SceneLoadManager.Instance.LoadLevel(levelToLoad);
+        Debug.Log("Loading level: " + levelName);
+        SceneLoadManager.Instance.LoadLevel(levelName);
     }
 }

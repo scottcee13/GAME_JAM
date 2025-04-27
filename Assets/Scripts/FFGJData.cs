@@ -37,6 +37,7 @@ public class FFGJData
 
     public static void DeleteAllLevelData()
     {
+        Debug.Log("Deleting all save data...");
         string path = Application.persistentDataPath;
         DirectoryInfo directory = new DirectoryInfo(path);
         directory.Delete(true);
@@ -53,5 +54,5 @@ public class FFGJData
 [Serializable]
 public class LevelData
 {
-    public float highScore = float.MaxValue;
+    public float highScore = float.MinValue;
 }

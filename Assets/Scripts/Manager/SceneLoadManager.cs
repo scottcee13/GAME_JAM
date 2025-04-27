@@ -46,7 +46,7 @@ public class SceneLoadManager : MonoBehaviour
     public void ReturnToMenu()
     {
         if (!GameManager.Instance.IsTransitioning)
-            StartCoroutine(LoadLevel("Menu", GameManager.GameState.MAIN_MENU));
+            StartCoroutine(LoadLevel("MainMenu", GameManager.GameState.MAIN_MENU));
     }        
 
     IEnumerator LoadLevel(int levelIndex, GameManager.GameState nextState)
