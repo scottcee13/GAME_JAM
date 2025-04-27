@@ -25,10 +25,17 @@ public class PlayerController : MonoBehaviour
     [Header("Time Shift")]
     public float TimeShiftCooldown = 0.2f;
 
+    [Header("Animation")]
+    public float VelocityAnimationThreshold = 0.2f; // threshold for animation to play
+
     [Header("References")]
     [SerializeField] private Collider2D _feetCollider;
     [SerializeField] private Collider2D _bodyCollider;
     [SerializeField] private PlayerClimbArea _climbArea;
+
+    private const string IDLE_ANIMATION = "Idle";
+    private const string RUNNING_ANIMATION = "Running";
+    private const string JUMP_ANIMATION = "Jump";
 
     private Vector2 _moveVelocity;
     private bool _isFacingRight;
@@ -44,12 +51,14 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInputManager _playerInputManager;
     private Rigidbody2D _rb;
+    private Animator _animator;
 
     private void Awake()
     {
         _isFacingRight = true;
 
         _playerInputManager = GetComponent<PlayerInputManager>();
+        _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _rb.gravityScale = GravityScale;
     }
@@ -57,6 +66,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _playerInputManager.TimeShiftEvent.AddListener(TimeShift);
+        _animator.Play(IDLE_ANIMATION);
     }
 
     private void Update()
@@ -81,6 +91,27 @@ public class PlayerController : MonoBehaviour
 
         _jumpCooldownTimer -= Time.deltaTime;
         _timeShiftCooldownTimer -= Time.deltaTime;
+
+        //Vector2 velocityAnim = new(
+        //    Mathf.Abs(_rb.linearVelocityX) + VelocityAnimationThreshold, 
+        //    Mathf.Abs(_rb.linearVelocityY) + VelocityAnimationThreshold);
+
+        if (_isClimbing)
+        {
+
+        }
+        else if (!_isGrounded)
+        {
+            //_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name = JUMP_ANIMATION;
+        }
+        else if ((Mathf.Abs(_rb.linearVelocityX) > VelocityAnimationThreshold) && _animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != RUNNING_ANIMATION)
+        {
+            _animator.Play(RUNNING_ANIMATION);
+        }
+        else if ((Mathf.Abs(_rb.linearVelocityX) <= VelocityAnimationThreshold) && _animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != IDLE_ANIMATION)
+        {
+            _animator.Play(IDLE_ANIMATION);
+        }
     }
 
     private void FixedUpdate()
@@ -109,7 +140,7 @@ public class PlayerController : MonoBehaviour
     {
         FlipCheck(moveInput);
 
-        if (moveInput != Vector2.zero)
+        if (!Mathf.Approximately(moveInput.x, 0f))
         {
             Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * MaxWalkSpeed;
 
@@ -118,7 +149,7 @@ public class PlayerController : MonoBehaviour
             _rb.linearVelocityX = _moveVelocity.x;
         }
 
-        else if (moveInput == Vector2.zero)
+        else if (Mathf.Approximately(moveInput.x, 0f))
         {
             _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
             //_rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);

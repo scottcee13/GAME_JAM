@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BG_PAST2_20250427103936_0: 5214868905970246877
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
