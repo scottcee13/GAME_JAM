@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 45648414}
   m_Layer: 7
   m_Name: Rope
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2795,7 +2795,7 @@ GameObject:
   - component: {fileID: 129176670}
   m_Layer: 7
   m_Name: Rope
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2948,11 +2948,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &154597343 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 6031597933778644897, guid: e47e4f24704e93a468577c210dd21c20, type: 3}
-  m_PrefabInstance: {fileID: 1500492325}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &171878540
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,7 +3555,7 @@ GameObject:
   - component: {fileID: 243691039}
   m_Layer: 7
   m_Name: Ladder
-  m_TagString: Untagged
+  m_TagString: Ladder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6521,7 +6516,7 @@ GameObject:
   - component: {fileID: 630975799}
   m_Layer: 7
   m_Name: Ladder
-  m_TagString: Untagged
+  m_TagString: Ladder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7629,7 +7624,7 @@ GameObject:
   - component: {fileID: 736386580}
   m_Layer: 7
   m_Name: Ladder (1)
-  m_TagString: Untagged
+  m_TagString: Ladder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7881,7 +7876,7 @@ GameObject:
   - component: {fileID: 782728437}
   m_Layer: 7
   m_Name: Ladder (3)
-  m_TagString: Untagged
+  m_TagString: Ladder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8133,7 +8128,7 @@ GameObject:
   - component: {fileID: 818830738}
   m_Layer: 7
   m_Name: Ladder (2)
-  m_TagString: Untagged
+  m_TagString: Ladder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9582,7 +9577,7 @@ GameObject:
   - component: {fileID: 921575804}
   m_Layer: 7
   m_Name: Rope (2)
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9747,7 +9742,7 @@ GameObject:
   - component: {fileID: 961031557}
   m_Layer: 7
   m_Name: Rope (1)
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10260,7 +10255,7 @@ GameObject:
   - component: {fileID: 1037360321}
   m_Layer: 7
   m_Name: Ladder (2)
-  m_TagString: Untagged
+  m_TagString: Ladder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10338,7 +10333,7 @@ GameObject:
   - component: {fileID: 1041463957}
   m_Layer: 7
   m_Name: Ladder (1)
-  m_TagString: Untagged
+  m_TagString: Ladder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10677,7 +10672,7 @@ GameObject:
   - component: {fileID: 1064559988}
   m_Layer: 7
   m_Name: Rope (1)
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10830,74 +10825,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2066354848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1099318734
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1099318735}
-  - component: {fileID: 1099318736}
-  m_Layer: 0
-  m_Name: StuckArea
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1099318735
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099318734}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1500492326}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1099318736
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099318734}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_Radius: 0.1
 --- !u!1 &1124435537
 GameObject:
   m_ObjectHideFlags: 0
@@ -14182,20 +14109,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8162991228683099258, guid: e47e4f24704e93a468577c210dd21c20, type: 3}
-      propertyPath: JumpForce
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 8162991228683099258, guid: e47e4f24704e93a468577c210dd21c20, type: 3}
-      propertyPath: _stuckTriggerCollider
-      value: 
-      objectReference: {fileID: 154597343}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2805918899426274903, guid: e47e4f24704e93a468577c210dd21c20, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1099318735}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e47e4f24704e93a468577c210dd21c20, type: 3}
 --- !u!4 &1500492326 stripped
@@ -18569,7 +18485,7 @@ GameObject:
   - component: {fileID: 1720626655}
   m_Layer: 7
   m_Name: Rope (4)
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18943,6 +18859,10 @@ PrefabInstance:
     - target: {fileID: 226041325394819103, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661658235057559797, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
+      propertyPath: m_text
+      value: Power continues to pulse from the artifact...
       objectReference: {fileID: 0}
     - target: {fileID: 3079264529084146546, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
       propertyPath: m_Name
@@ -20048,7 +19968,7 @@ GameObject:
   - component: {fileID: 1947130047}
   m_Layer: 7
   m_Name: Rope (3)
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20510,7 +20430,7 @@ GameObject:
   - component: {fileID: 2027328959}
   m_Layer: 7
   m_Name: Rope
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21130,7 +21050,7 @@ GameObject:
   - component: {fileID: 2083515749}
   m_Layer: 7
   m_Name: Rope (3)
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21509,7 +21429,7 @@ GameObject:
   - component: {fileID: 2127346665}
   m_Layer: 7
   m_Name: Rope (2)
-  m_TagString: Untagged
+  m_TagString: Rope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

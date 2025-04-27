@@ -39,6 +39,10 @@ public class PlayerController : MonoBehaviour
     private const string IDLE_ANIMATION = "Idle";
     private const string RUNNING_ANIMATION = "Running";
     private const string JUMP_ANIMATION = "Jump";
+    private const string CLIMB_LADDER_ANIMATION = "ClimbLadder";
+    private const string CLIMB_LADDER_IDLE_ANIMATION = "ClimbLadderIdle";
+    private const string CLIMB_ROPE_ANIMATION = "ClimbRope";
+    private const string CLIMB_ROPE_IDLE_ANIMATION = "ClimbRopeIdle";
 
     private Vector2 _moveVelocity;
     private bool _isFacingRight;
@@ -101,13 +105,37 @@ public class PlayerController : MonoBehaviour
 
         if (_isClimbing)
         {
-
+            if (
+                Mathf.Abs(_rb.linearVelocityX) > VelocityAnimationThreshold
+                || Mathf.Abs(_rb.linearVelocityY) > VelocityAnimationThreshold)
+            {
+                if (_climbArea.LadderType == "Rope" && GetCurrentAnimationName() != CLIMB_ROPE_ANIMATION)
+                {
+                    _animator.Play(CLIMB_ROPE_ANIMATION);
+                }
+                else if (_climbArea.LadderType == "Ladder" && GetCurrentAnimationName() != CLIMB_LADDER_ANIMATION)
+                {
+                    _animator.Play(CLIMB_LADDER_ANIMATION);
+                }
+            }
+            else
+            {
+                if (_climbArea.LadderType == "Rope" && GetCurrentAnimationName() != CLIMB_ROPE_IDLE_ANIMATION)
+                {
+                    _animator.Play(CLIMB_ROPE_IDLE_ANIMATION);
+                }
+                else if (_climbArea.LadderType == "Ladder" && GetCurrentAnimationName() != CLIMB_LADDER_IDLE_ANIMATION)
+                {
+                    _animator.Play(CLIMB_LADDER_IDLE_ANIMATION);
+                }
+            }
         }
-        else if (!_isGrounded)
+        else if (!_isGrounded && GetCurrentAnimationName() != JUMP_ANIMATION)
         {
+            _animator.Play(JUMP_ANIMATION);
             //_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name = JUMP_ANIMATION;
         }
-        else if ((Mathf.Abs(_rb.linearVelocityX) > VelocityAnimationThreshold) && _animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != RUNNING_ANIMATION)
+        else if ((Mathf.Abs(_rb.linearVelocityX) > VelocityAnimationThreshold) && GetCurrentAnimationName() != RUNNING_ANIMATION)
         {
             _animator.Play(RUNNING_ANIMATION);
         }
@@ -303,6 +331,9 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
+    private string GetCurrentAnimationName()
+    {
+        return _animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+    }
 
 }
