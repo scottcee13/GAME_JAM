@@ -326,7 +326,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   GroundDetectionRayLength: 0.02
-  JumpForce: 11
+  JumpForce: 12
   JumpCooldown: 0.2
   GravityScale: 2
   _showDebugGroundedBox: 1
