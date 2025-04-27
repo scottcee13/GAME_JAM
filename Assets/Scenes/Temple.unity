@@ -18860,10 +18860,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1661658235057559797, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_text
-      value: Power continues to pulse from the artifact...
-      objectReference: {fileID: 0}
     - target: {fileID: 3079264529084146546, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
       propertyPath: m_Name
       value: UIManager
