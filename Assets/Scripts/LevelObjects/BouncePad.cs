@@ -22,6 +22,7 @@ public class BouncePad : MonoBehaviour
             Debug.Log("Found player");
             //player.PlayerController.Jump(_bounceStrength);
             _caughtPlayer = player.PlayerController;
+            AudioManager.Instance.PlaySFX(4); // play bounce sound
             _animator.Play(BOUNCE_ANIMATION);
         }
     }

@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class DeathFloorScript : MonoBehaviour
 {
+    [SerializeField] private string _deathMessage;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        GameManager.Instance.death.Invoke();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GameManager.Instance.death.Invoke(_deathMessage);
+        }
+        
     }
 }

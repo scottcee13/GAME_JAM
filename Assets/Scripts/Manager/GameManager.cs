@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     // Singleton instance of the game manager
     public static GameManager Instance { get; private set; }
 
-    public UnityEvent death;
+    public UnityEvent<string> death;
     public UnityEvent pause;
 
     [SerializeField] private InputAction pauseAction;
@@ -79,12 +79,14 @@ public class GameManager : MonoBehaviour
         death.AddListener(GameOver);
     }
 
-    void GameOver()
+    void GameOver(string message)
     {
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlaySFX(3); // play bounce sound
         gameState = GameState.GAME_OVER;
         UIManager.Instance.hideTimer();
         GameFrozen = true;
-        UIManager.Instance.gameOverMenu.SetActive(true);    
+        UIManager.Instance.ShowGameOver(message);    
     }
 
     //toggle pause

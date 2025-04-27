@@ -78,6 +78,7 @@ public class SceneLoadManager : MonoBehaviour
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
+        AudioManager.Instance.PlayMusic(0);
         UIManager.Instance.showTimer();
         if (nextState != GameManager.GameState.MAIN_MENU)
             UIManager.Instance.ResetTimer(LevelBase.Instance.AllottedTime);
@@ -103,6 +104,7 @@ public class SceneLoadManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(transitionTime);
 
+        AudioManager.Instance.PlayMusic(0);
         UIManager.Instance.HideUI();
         GameManager.Instance.GameFrozen = false;
         transition.SetTrigger("Load Scene");
