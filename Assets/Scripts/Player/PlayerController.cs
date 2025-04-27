@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
         if (_playerInputManager.JumpPressed && (_isGrounded || _isClimbing)&& _jumpCooldownTimer <= 0)
         {
+            //AudioManager.Instance.PlaySFX(2); // play bounce sound
             Jump(1);
             StopClimb(); //can't jump and climb at same time
         }
@@ -286,6 +287,7 @@ public class PlayerController : MonoBehaviour
         if (_timeShiftCooldownTimer > TimeShiftCooldown)
             return;
 
+        AudioManager.Instance.PlaySFX(0); // play time shift sound
         _timeShiftCooldownTimer = TimeShiftCooldown;
         LevelBase.Instance.OnTimeShift();
     }

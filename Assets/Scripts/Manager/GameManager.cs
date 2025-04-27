@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
 
     void GameOver(string message)
     {
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlaySFX(3); // play bounce sound
         gameState = GameState.GAME_OVER;
         UIManager.Instance.hideTimer();
         GameFrozen = true;
