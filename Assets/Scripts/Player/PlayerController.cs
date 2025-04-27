@@ -1,5 +1,7 @@
-using Unity.VisualScripting;
+using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Climbing")]
     public float ClimbSpeed = 3f;
+    public float ClimbShuffleSpeed = 0.2f; // speed when moving sideways while climbing
 
     [Header("Time Shift")]
     public float TimeShiftCooldown = 0.2f;
@@ -73,7 +76,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log($"{_playerInputManager.JumpPressed} {_isGrounded} {_jumpCooldownTimer}");
 
-        if (_playerInputManager.JumpPressed && _isGrounded && _jumpCooldownTimer <= 0)
+        if (_playerInputManager.JumpPressed && (_isGrounded || _isClimbing)&& _jumpCooldownTimer <= 0)
         {
             Jump(1);
             StopClimb(); //can't jump and climb at same time
@@ -160,6 +163,7 @@ public class PlayerController : MonoBehaviour
     private void Climb()
     {
         _rb.linearVelocityY = _playerInputManager.MovementDirection.y * ClimbSpeed;
+        _rb.linearVelocityX = _playerInputManager.MovementDirection.x * ClimbShuffleSpeed;
     }
 
     private void ClimbCheck()
@@ -184,12 +188,12 @@ public class PlayerController : MonoBehaviour
         }
 
         // Cancel if we decide to move sideways
-        if (!Mathf.Approximately(_playerInputManager.MovementDirection.x, 0f))
-        {
-            StopClimb();
-            Debug.Log("movin sideways");
-            return;
-        }
+        //if (!Mathf.Approximately(_playerInputManager.MovementDirection.x, 0f))
+        //{
+        //    StopClimb();
+        //    Debug.Log("movin sideways");
+        //    return;
+        //}
     }
 
     private void StartClimb()
@@ -299,5 +303,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    
+
+
 }

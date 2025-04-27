@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class LevelBase : MonoBehaviour
 {
@@ -20,8 +21,13 @@ public class LevelBase : MonoBehaviour
     [SerializeField] private GameObject _presentWorld;
     [SerializeField] private bool _inThePast = false; // when do we start?
 
+    [Space]
+
+    [Tooltip("For player stuck checks")]
+    [SerializeField] private List<CompositeCollider2D> _mapColliders;
 
     public float AllottedTime => _allottedTime;
+    public List<CompositeCollider2D> MapColliders => _mapColliders;
 
     private void Awake()
     {

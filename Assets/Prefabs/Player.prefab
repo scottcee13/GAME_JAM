@@ -326,13 +326,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   GroundDetectionRayLength: 0.02
-  JumpForce: 10
+  JumpForce: 11
   JumpCooldown: 0.2
   GravityScale: 2
   _showDebugGroundedBox: 1
   ClimbSpeed: 4
   TimeShiftCooldown: 0.2
   VelocityAnimationThreshold: 0.3
+  _defaultCollisionFilter:
+    serializedVersion: 2
+    m_Bits: 65
+  _stuckTriggerCollider: {fileID: 0}
+  checkDistance: 0.5
+  moveStep: 0.05
+  correctionSpeed: 5
   _feetCollider: {fileID: 1642244079169108574}
   _bodyCollider: {fileID: 2535054716112062890}
   _climbArea: {fileID: 8842368110375967626}
