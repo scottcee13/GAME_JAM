@@ -1,0 +1,272 @@
+using Unity.VisualScripting;
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerController : MonoBehaviour
+{
+    [Header("Walk")]
+    public float MaxWalkSpeed = 12.5f;
+    public float GroundAcceleration = 5f;
+    public float GroundDeceleration = 20f;
+    public float AirAcceleration = 5f;
+    public float AirDeceleration = 20f;
+
+    [Header("Jumping")]
+    public LayerMask GroundLayer;
+    public float GroundDetectionRayLength = 0.02f;
+    public float JumpForce = 10f;
+    public float JumpCooldown = 0.2f;
+    public float GravityScale = 2f;
+    [SerializeField] private bool _showDebugGroundedBox = false;
+
+    [Header("Climbing")]
+    public float ClimbSpeed = 3f;
+
+    [Header("Time Shift")]
+    public float TimeShiftCooldown = 0.2f;
+
+    [Header("References")]
+    [SerializeField] private Collider2D _feetCollider;
+    [SerializeField] private Collider2D _bodyCollider;
+    [SerializeField] private PlayerClimbArea _climbArea;
+
+    private Vector2 _moveVelocity;
+    private bool _isFacingRight;
+
+    private RaycastHit2D _groundHit;
+    private bool _isGrounded;
+
+    //private bool _isJumping = false;
+    private float _jumpCooldownTimer = 0f;
+    private float _timeShiftCooldownTimer = 0f;
+
+    private bool _isClimbing = false;
+
+    private PlayerInputManager _playerInputManager;
+    private Rigidbody2D _rb;
+
+    private void Awake()
+    {
+        _isFacingRight = true;
+
+        _playerInputManager = GetComponent<PlayerInputManager>();
+        _rb = GetComponent<Rigidbody2D>();
+        _rb.gravityScale = GravityScale;
+    }
+
+    private void Start()
+    {
+        _playerInputManager.TimeShiftEvent.AddListener(TimeShift);
+    }
+
+    private void Update()
+    {
+        //Debug.Log($"{_playerInputManager.JumpPressed} {_isGrounded} {_jumpCooldownTimer}");
+
+        if (_playerInputManager.JumpPressed && _isGrounded && _jumpCooldownTimer <= 0)
+        {
+            Jump(1);
+            StopClimb(); //can't jump and climb at same time
+        }
+
+        if (_climbArea.CanClimb && !_isClimbing && !Mathf.Approximately(_playerInputManager.MovementDirection.y, 0f))
+        {
+            StartClimb();
+        }
+
+        if (_isClimbing)
+        {
+            ClimbCheck();
+        }
+
+        _jumpCooldownTimer -= Time.deltaTime;
+        _timeShiftCooldownTimer -= Time.deltaTime;
+    }
+
+    private void FixedUpdate()
+    {
+        CollisionChecks();
+
+        if (!_isClimbing)
+        {
+            if (_isGrounded)
+            {
+                Move(GroundAcceleration, GroundDeceleration, _playerInputManager.MovementDirection);
+            }
+            else
+            {
+                Move(AirAcceleration, AirDeceleration, _playerInputManager.MovementDirection);
+            }
+        }
+        else
+        {
+            Climb();
+        }
+    }
+
+    #region Movement
+    private void Move(float acceleration, float deceleration, Vector2 moveInput)
+    {
+        FlipCheck(moveInput);
+
+        if (moveInput != Vector2.zero)
+        {
+            Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * MaxWalkSpeed;
+
+            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+            //_rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+            _rb.linearVelocityX = _moveVelocity.x;
+        }
+
+        else if (moveInput == Vector2.zero)
+        {
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
+            //_rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+            _rb.linearVelocityX = _moveVelocity.x;
+        }
+    }
+
+    private void Climb()
+    {
+        _rb.linearVelocityY = _playerInputManager.MovementDirection.y * ClimbSpeed;
+    }
+
+    private void ClimbCheck()
+    {
+        // just can't climb
+        if (!_climbArea.CanClimb)
+        {
+            StopClimb();
+            Debug.Log("can't climb");
+            // little hop if climbing upward and exceed ladder
+            if (_playerInputManager.MovementDirection.y > 0f)
+                Jump(0.5f);
+            return;
+        }
+
+        // Climb towards ground, stop climbing
+        if (_isGrounded && _playerInputManager.MovementDirection.y < 0f)
+        {
+            StopClimb();
+            Debug.Log("going toward the ground");
+            return;
+        }
+
+        // Cancel if we decide to move sideways
+        if (!Mathf.Approximately(_playerInputManager.MovementDirection.x, 0f))
+        {
+            StopClimb();
+            Debug.Log("movin sideways");
+            return;
+        }
+    }
+
+    private void StartClimb()
+    {
+        _isClimbing = true;
+        _rb.gravityScale = 0f;
+        _rb.linearVelocity = Vector2.zero; // reset all movement
+        _feetCollider.enabled = false; 
+        _bodyCollider.enabled = false; // disable colliders so we can phase thru platforms from below
+    }
+
+    private void StopClimb()
+    {
+        _isClimbing = false;
+        _rb.gravityScale = GravityScale;
+        _feetCollider.enabled = true;
+        _bodyCollider.enabled = true;
+    }
+
+    private void FlipCheck(Vector2 moveInput)
+    {
+        if (_isFacingRight && moveInput.x < 0)
+        {
+            SetFacingRight(false);
+        }
+        else if (!_isFacingRight && moveInput.x > 0)
+        {
+            SetFacingRight(true);
+        }
+
+    }
+
+    private void SetFacingRight(bool faceRight)
+    {
+        if (faceRight)
+        {
+            _isFacingRight = true;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        else
+        {
+            _isFacingRight = false;
+            transform.Rotate(0f, -180f, 0f);
+        }
+    }
+
+    #endregion
+
+    #region Jump
+
+    public void Jump(float multiplier)
+    {
+        _jumpCooldownTimer = JumpCooldown;
+
+        _rb.AddForceY(JumpForce * multiplier, ForceMode2D.Impulse);
+    }
+
+    #endregion
+
+    public void TimeShift()
+    {
+        if (_timeShiftCooldownTimer > TimeShiftCooldown)
+            return;
+
+        _timeShiftCooldownTimer = TimeShiftCooldown;
+        LevelBase.Instance.OnTimeShift();
+    }
+
+    #region Collision Checks
+
+    private void CollisionChecks()
+    {
+        IsGrounded();
+    }
+
+    /// <summary>
+    /// Box cast based on player's boxy feet
+    /// </summary>
+    private void IsGrounded()
+    {
+        Vector2 boxCastOrigin = new(_feetCollider.bounds.center.x, _feetCollider.bounds.min.y);
+        Vector2 boxCastSize = new(_feetCollider.bounds.size.x, GroundDetectionRayLength);
+
+        _groundHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, GroundDetectionRayLength, GroundLayer);
+
+        _isGrounded = (_groundHit.collider != null); //ground if we hit something
+
+        #region Debug Visualization
+        if (_showDebugGroundedBox)
+        {
+            Color rayColor;
+            if (_isGrounded)
+            {
+                rayColor = Color.green;
+            }
+            else
+            {
+                rayColor = Color.red;
+            }
+
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * GroundDetectionRayLength, rayColor);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * GroundDetectionRayLength, rayColor);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y - GroundDetectionRayLength), Vector2.right * boxCastSize.x, rayColor);
+        }
+        #endregion
+    }
+
+    #endregion
+
+    
+}
