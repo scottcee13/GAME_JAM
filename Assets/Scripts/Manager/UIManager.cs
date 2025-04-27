@@ -24,7 +24,8 @@ public class UIManager : MonoBehaviour
     public float HighScore = float.MinValue;
 
     public GameObject pauseMenu;
-    public GameObject gameOverMenu;  
+    [SerializeField] private GameObject gameOverMenu;  
+    [SerializeField] private TextMeshProUGUI gameOverText;
     public GameObject gameWinMenu;
     public GameObject timerObject;
     public GameObject newBestObject;
@@ -102,6 +103,12 @@ public class UIManager : MonoBehaviour
         gameOverMenu.SetActive(false);
         gameWinMenu.SetActive(false);
         newBestObject.SetActive(false);
+    }
+
+    public void ShowGameOver(string message)
+    {
+        gameOverMenu.SetActive(true);
+        gameOverText.text = message;
     }
 
     public void CompleteLevel(string path, string fileName, bool endOfArea)

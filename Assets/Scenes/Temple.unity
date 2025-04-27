@@ -3185,6 +3185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d857ba75c845ce4982ce008b16ee7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deathMessage: You fell to your death
 --- !u!61 &177276313
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4280,6 +4281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d857ba75c845ce4982ce008b16ee7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deathMessage: You got spiked
 --- !u!19719996 &302600584
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -6221,7 +6223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &593368619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6345,6 +6347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d857ba75c845ce4982ce008b16ee7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deathMessage: You fell to your death
 --- !u!61 &621871276
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7209,6 +7212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d857ba75c845ce4982ce008b16ee7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deathMessage: You got spiked
 --- !u!19719996 &685187543
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -18836,153 +18840,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 340551685865109113, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661658235057559797, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_text
-      value: lorem ipsum et dolor
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661658235057559797, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 2782364680342605208, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 268.00003
-      objectReference: {fileID: 0}
-    - target: {fileID: 2782364680342605208, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 41.999977
-      objectReference: {fileID: 0}
     - target: {fileID: 3079264529084146546, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3079264529084146546, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3250791142200813859, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 268.00003
-      objectReference: {fileID: 0}
-    - target: {fileID: 3250791142200813859, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 3.1399746
-      objectReference: {fileID: 0}
-    - target: {fileID: 3545477240748105143, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 3787370611438988420, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 269
-      objectReference: {fileID: 0}
-    - target: {fileID: 3787370611438988420, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 178
-      objectReference: {fileID: 0}
-    - target: {fileID: 3822500979509417024, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 4337678704916211160, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 4736835632021996292, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 5238902294634165040, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 268.00003
-      objectReference: {fileID: 0}
-    - target: {fileID: 5238902294634165040, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 83.99997
-      objectReference: {fileID: 0}
-    - target: {fileID: 5938073040987994031, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 463.693
-      objectReference: {fileID: 0}
-    - target: {fileID: 5938073040987994031, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80.382
-      objectReference: {fileID: 0}
-    - target: {fileID: 5938073040987994031, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -98.999985
-      objectReference: {fileID: 0}
-    - target: {fileID: 5938073040987994031, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 44.00002
-      objectReference: {fileID: 0}
-    - target: {fileID: 6240464702883984590, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_text
-      value: 'Extra time:'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6240464702883984590, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_fontSize
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6240464702883984590, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6240464702883984590, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 7086225868347414507, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_text
-      value: 'Personal Best:'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7086225868347414507, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_fontSize
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 7086225868347414507, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 7086225868347414507, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 7429328271341105151, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 8435536223752818242, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_text
-      value: You Escaped!
-      objectReference: {fileID: 0}
-    - target: {fileID: 8435536223752818242, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 8463254132823460813, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694579781324338896, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057809006683595569, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 269.00006
-      objectReference: {fileID: 0}
-    - target: {fileID: 9057809006683595569, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 127.999954
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7808850228833654174, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eabde807d6ed12c45bc6a2ac0b195c6b, type: 3}
@@ -20007,6 +19870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d857ba75c845ce4982ce008b16ee7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deathMessage: You fell to your death
 --- !u!61 &1922778107
 BoxCollider2D:
   m_ObjectHideFlags: 0

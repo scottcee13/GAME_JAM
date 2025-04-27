@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using static GameManager;
 
 public class LevelBase : MonoBehaviour
 {
@@ -54,6 +55,14 @@ public class LevelBase : MonoBehaviour
         //set starting time based on yes
         _pastWorld.SetActive(_inThePast);
         _presentWorld.SetActive(!_inThePast);
+    }
+
+    private void Update()
+    {
+        if (UIManager.Instance.Timer <= 0f && GameManager.Instance.gameState == GameState.PLAYING)
+        {
+            GameManager.Instance.death.Invoke("You ran out of time");
+        }
     }
 
     public void OnTimeShift()
